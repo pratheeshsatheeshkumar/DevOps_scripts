@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# prompt user for directory path
+echo "Please enter a directory path to find the largest 15 sub directories:"
+read directory
+
+# check if directory exists
+if [ ! -d "$directory" ]; then
+  echo "Error: Directory does not exist."
+  exit 1
+fi
+
+# find and list largest directories
+echo "The largest directories in $directory are:"
+du -h $directory/* 2>/dev/null | sort -hr | head -n 15
+
+# delete the contents of the entered directories
+echo "Do you want to delete the contents of any directory path?[y/n]"
+read delFlag
+if [ "$delFlag" == "y" ]; then
+    echo "Please enter a directory path to get the contents deleted:"
+    read delDir
+
+    if [ ! -d "$directory" ]; then
+       echo "Error: Directory does not exist."
+       exit 1
+    fi
+
+    # deleting the contents of the directory 
+    echo "Deleting the contents of $delDir:"
+    rm -rf $delDir/* 
+    du -h $delDir
+else
+    echo "Disk usage:"
+    du -h $delDir/* 2>/dev/null | sort -hr | head -n 15      
+fi
+   
+
+
