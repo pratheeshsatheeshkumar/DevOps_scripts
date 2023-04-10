@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# prompt user for directory path
+echo "Please enter a directory path:"
+read directory
+
+# check if directory exists
+if [ ! -d "$directory" ]; then
+  echo "Error: Directory does not exist."
+  exit 1
+fi
+
+# find and list largest directories
+echo "The largest directories in $directory are:"
+du -h $directory/* 2>/dev/null | sort -hr | head -n 10
+
